@@ -56,3 +56,10 @@ The goal is to provide a practical and in-depth guide on best practices for time
 *   **Facebook Prophet**: A powerful and flexible tool for forecasting time series with seasonality.
 *   **Machine Learning**: Application of algorithms such as XGBoost and Neural Networks for time series forecasting.
 
+## Improved R Time Series Repository
+
+### Additional Content
+- ARIMA, SARIMA, and Prophet models
+- Financial time series analysis
+- Forecasting with confidence intervals
+- Backtesting and model evaluation

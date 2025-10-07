@@ -63,3 +63,10 @@ The goal is to provide a practical and in-depth guide on best practices for time
 - Financial time series analysis
 - Forecasting with confidence intervals
 - Backtesting and model evaluation
+## Improved R Time Series Repository
+
+### Additional Content
+- ARIMA, SARIMA, and Prophet models
+- Financial time series analysis
+- Forecasting with confidence intervals
+- Backtesting and model evaluation

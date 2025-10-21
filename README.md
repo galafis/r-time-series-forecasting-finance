@@ -5,6 +5,23 @@
 [![R Tests](https://github.com/galafis/r-time-series-forecasting-finance/workflows/R%20Tests/badge.svg)](https://github.com/galafis/r-time-series-forecasting-finance/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+### 🚀 Quick Start
+
+**Complete guide**: See [QUICKSTART.md](QUICKSTART.md) for a detailed 5-minute setup guide.
+
+**Fast track:**
+```bash
+# 1. Clone repository
+git clone https://github.com/galafis/r-time-series-forecasting-finance.git
+cd r-time-series-forecasting-finance
+
+# 2. Install dependencies
+Rscript INSTALL.R
+
+# 3. Run example
+Rscript examples/basic_usage.R
+```
+
 ---
 
 ## 🇧🇷 Previsão de Séries Temporais Financeiras com R
@@ -489,6 +506,13 @@ pacf(data, lag.max = 40)
 - [Time Series Analysis (CRAN Task View)](https://cran.r-project.org/web/views/TimeSeries.html)
 - [Quantitative Finance with R](https://www.quantmod.com/)
 - [Prophet Documentation](https://facebook.github.io/prophet/)
+
+### 📚 Project Documentation
+
+- **[QUICKSTART.md](QUICKSTART.md)** - 5-minute setup guide
+- **[DOCUMENTATION.md](DOCUMENTATION.md)** - Complete API documentation
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history
 
 ### 🎯 Próximos Passos
 

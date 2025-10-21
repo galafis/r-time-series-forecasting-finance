@@ -1,0 +1,36 @@
+# R specific
+.Rhistory
+.Rdata
+.RData
+.Ruserdata
+*.Rproj
+.Rproj.user/
+
+# R packages
+*.tar.gz
+*.zip
+
+# Temporary files
+*~
+*.swp
+*.swo
+.DS_Store
+
+# Output files
+*.pdf
+*.html
+Rplots.pdf
+
+# Data files (optional - uncomment if needed)
+# *.csv
+# *.xlsx
+
+# IDE
+.vscode/
+.idea/
+
+# Testing
+tests/testthat/_snaps/
+
+# Logs
+*.log

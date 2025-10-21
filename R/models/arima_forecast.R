@@ -13,6 +13,15 @@ library(ggplot2)
 #' @param ts_data Time series data
 #' @return List with test results
 test_stationarity <- function(ts_data) {
+  # Input validation
+  if (!is.ts(ts_data) && !is.numeric(ts_data)) {
+    stop("Input must be a time series or numeric vector")
+  }
+  
+  if (length(ts_data) < 3) {
+    stop("Time series must have at least 3 observations")
+  }
+  
   adf_test <- adf.test(ts_data, alternative = "stationary")
   
   result <- list(
@@ -37,6 +46,15 @@ test_stationarity <- function(ts_data) {
 #' @param seasonal Boolean indicating if seasonal component exists
 #' @return Fitted ARIMA model
 fit_arima_model <- function(ts_data, seasonal = FALSE) {
+  # Input validation
+  if (!is.ts(ts_data) && !is.numeric(ts_data)) {
+    stop("Input must be a time series or numeric vector")
+  }
+  
+  if (length(ts_data) < 10) {
+    warning("Time series is very short. Model may not be reliable.")
+  }
+  
   cat("Fitting ARIMA model...\n")
   
   # Automatic ARIMA model selection
@@ -64,6 +82,15 @@ fit_arima_model <- function(ts_data, seasonal = FALSE) {
 #' @param h Forecast horizon
 #' @return Forecast object
 generate_forecast <- function(model, h = 30) {
+  # Input validation
+  if (!inherits(model, "Arima")) {
+    stop("Model must be an Arima object")
+  }
+  
+  if (h <= 0) {
+    stop("Forecast horizon must be positive")
+  }
+  
   cat(sprintf("\nGenerating %d-step ahead forecast...\n", h))
   
   forecast_result <- forecast(model, h = h)
@@ -81,6 +108,19 @@ generate_forecast <- function(model, h = 30) {
 #' @param predicted Predicted values
 #' @return List of accuracy metrics
 calculate_accuracy <- function(actual, predicted) {
+  # Input validation
+  if (!is.numeric(actual) || !is.numeric(predicted)) {
+    stop("Actual and predicted values must be numeric")
+  }
+  
+  if (length(actual) != length(predicted)) {
+    stop("Actual and predicted values must have the same length")
+  }
+  
+  if (length(actual) == 0) {
+    stop("Cannot calculate accuracy for empty vectors")
+  }
+  
   errors <- actual - predicted
   
   mae <- mean(abs(errors))
@@ -109,9 +149,26 @@ calculate_accuracy <- function(actual, predicted) {
 #' @param forecast_horizon Number of periods to forecast
 #' @return List containing model and forecast
 arima_pipeline <- function(data, frequency = 1, forecast_horizon = 30) {
-  cat("=" * 60, "\n")
+  # Input validation
+  if (!is.numeric(data)) {
+    stop("Data must be a numeric vector")
+  }
+  
+  if (length(data) < 10) {
+    stop("Time series must have at least 10 observations")
+  }
+  
+  if (frequency < 1) {
+    stop("Frequency must be at least 1")
+  }
+  
+  if (forecast_horizon <= 0) {
+    stop("Forecast horizon must be positive")
+  }
+  
+  cat(paste(rep("=", 60), collapse = ""), "\n")
   cat("ARIMA TIME SERIES FORECASTING PIPELINE\n")
-  cat("=" * 60, "\n\n")
+  cat(paste(rep("=", 60), collapse = ""), "\n\n")
   
   # Create time series object
   ts_data <- ts(data, frequency = frequency)

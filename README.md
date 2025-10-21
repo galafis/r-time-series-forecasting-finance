@@ -2,6 +2,9 @@
 
 ![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white) ![Tidyverse](https://img.shields.io/badge/Tidyverse-1E90FF?style=for-the-badge) ![Forecast](https://img.shields.io/badge/Forecast-FF6F00?style=for-the-badge) ![Prophet](https://img.shields.io/badge/Prophet-4267B2?style=for-the-badge)
 
+[![R Tests](https://github.com/galafis/r-time-series-forecasting-finance/workflows/R%20Tests/badge.svg)](https://github.com/galafis/r-time-series-forecasting-finance/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ---
 
 ## 🇧🇷 Previsão de Séries Temporais Financeiras com R
@@ -32,97 +35,108 @@ R é a linguagem preferida para análise quantitativa em finanças:
 4. **Trading**: Sinais de compra/venda baseados em forecasts
 5. **Risk Management**: Análise de cenários e stress testing
 
-### 🏗️ Modelos Implementados
+### 🏗️ Models Implemented
 
-Este repositório implementa **8 modelos** de previsão:
+This repository currently implements **ARIMA** (AutoRegressive Integrated Moving Average) forecasting with comprehensive testing and CI/CD.
 
-1. **ARIMA** - AutoRegressive Integrated Moving Average
-2. **SARIMA** - Seasonal ARIMA
-3. **GARCH** - Generalized AutoRegressive Conditional Heteroskedasticity
-4. **Prophet** - Facebook's forecasting tool
-5. **ETS** - Exponential Smoothing State Space
-6. **VAR** - Vector AutoRegression
-7. **TBATS** - Trigonometric seasonality, Box-Cox transformation, ARMA errors, Trend, Seasonal
-8. **Neural Network** - LSTM para séries temporais
+**Currently Available:**
+1. ✅ **ARIMA** - AutoRegressive Integrated Moving Average (fully implemented and tested)
+
+**Planned for Future Releases:**
+2. ⏳ **SARIMA** - Seasonal ARIMA
+3. ⏳ **GARCH** - Generalized AutoRegressive Conditional Heteroskedasticity
+4. ⏳ **Prophet** - Facebook's forecasting tool
+5. ⏳ **ETS** - Exponential Smoothing State Space
+6. ⏳ **VAR** - Vector AutoRegression
+7. ⏳ **TBATS** - Trigonometric seasonality, Box-Cox transformation, ARMA errors, Trend, Seasonal
+8. ⏳ **Neural Network** - LSTM para séries temporais
 
 ### 📂 Estrutura do Repositório
 
 ```
 r-time-series-forecasting-finance/
 ├── R/
-│   ├── models/
-│   │   ├── arima_forecast.R          # Modelo ARIMA completo
-│   │   ├── sarima_seasonal.R         # SARIMA com sazonalidade
-│   │   ├── garch_volatility.R        # Modelagem de volatilidade
-│   │   ├── prophet_forecast.R        # Facebook Prophet
-│   │   ├── ets_exponential.R         # Exponential Smoothing
-│   │   └── ensemble_models.R         # Ensemble de modelos
-│   ├── preprocessing/
-│   │   ├── data_cleaning.R           # Limpeza de dados
-│   │   ├── feature_engineering.R     # Criação de features
-│   │   └── stationarity_tests.R      # Testes de estacionariedade
-│   ├── visualization/
-│   │   ├── time_series_plots.R       # Gráficos de séries
-│   │   ├── forecast_plots.R          # Visualização de forecasts
-│   │   └── diagnostic_plots.R        # Diagnósticos de modelos
-│   └── evaluation/
-│       ├── backtesting.R             # Backtesting de modelos
-│       ├── metrics.R                 # Métricas de avaliação
-│       └── cross_validation.R        # Validação cruzada temporal
-├── data/
-│   ├── stock_prices.csv              # Preços históricos
-│   └── market_indicators.csv         # Indicadores de mercado
+│   └── models/
+│       └── arima_forecast.R          # Modelo ARIMA completo com testes
 ├── tests/
-│   └── test_models.R                 # Testes unitários
+│   ├── run_tests.R                   # Test runner
+│   └── testthat/
+│       └── test_arima_forecast.R     # Testes unitários ARIMA
+├── data/
+│   └── sample_stock_prices.csv       # Dados de exemplo
+├── examples/
+│   └── basic_usage.R                 # Exemplos de uso
+├── images/
+│   ├── arima_forecast.png            # Visualização de forecast
+│   └── garch_volatility.png          # Visualização de volatilidade
+├── .github/
+│   └── workflows/
+│       └── r-tests.yml               # CI/CD pipeline
 ├── INSTALL.R                         # Instalação de pacotes
+├── CONTRIBUTING.md                   # Guia de contribuição
+├── LICENSE                           # Licença MIT
 └── README.md
 ```
 
 ### 🚀 Instalação e Configuração
 
-#### 1. Instalar R e RStudio
+#### 1. Pré-requisitos
 
+- R version 4.0 or higher
+- RStudio (recommended but optional)
+
+**Instalar R:**
 ```bash
 # Ubuntu/Debian
 sudo apt-get install r-base r-base-dev
 
 # macOS
-brew install r rstudio
+brew install r
 
 # Windows: Download from https://cran.r-project.org/
 ```
 
-#### 2. Instalar Pacotes Necessários
+#### 2. Clonar o Repositório
+
+```bash
+git clone https://github.com/galafis/r-time-series-forecasting-finance.git
+cd r-time-series-forecasting-finance
+```
+
+#### 3. Instalar Pacotes Necessários
+
+```bash
+# Método automático (recomendado)
+Rscript INSTALL.R
+
+# Ou instale manualmente no R console
+R
+```
 
 ```r
-# Execute INSTALL.R
-source("INSTALL.R")
-
-# Ou instale manualmente
 install.packages(c(
   "forecast",      # Modelos ARIMA, ETS
   "tseries",       # Testes de séries temporais
   "ggplot2",       # Visualizações
-  "quantmod",      # Dados financeiros
-  "prophet",       # Facebook Prophet
-  "rugarch",       # Modelos GARCH
+  "quantmod",      # Dados financeiros (opcional)
   "xts",           # Séries temporais estendidas
   "zoo",           # Objetos de séries temporais
-  "tidyverse",     # Manipulação de dados
-  "plotly"         # Gráficos interativos
+  "testthat"       # Framework de testes
 ))
 ```
 
-#### 3. Executar Exemplo
+#### 4. Verificar Instalação
 
-```r
-# Carregar bibliotecas
-library(forecast)
-library(ggplot2)
-library(quantmod)
+```bash
+# Executar testes para verificar que tudo está funcionando
+Rscript tests/run_tests.R
+```
 
-# Executar modelo ARIMA
-source("R/models/arima_forecast.R")
+#### 5. Executar Exemplo
+
+```bash
+# Executar exemplo básico
+Rscript examples/basic_usage.R
 ```
 
 ### 💻 Código Principal: Modelo ARIMA
@@ -373,6 +387,36 @@ cat("MAE:", results$mae, "\n")
 cat("RMSE:", results$rmse, "\n")
 cat("MAPE:", results$mape, "%\n")
 ```
+
+### 🧪 Testing
+
+The project includes a comprehensive test suite using the `testthat` framework.
+
+**Run all tests:**
+```bash
+Rscript tests/run_tests.R
+```
+
+**Test coverage:**
+- ✅ Stationarity testing
+- ✅ Model fitting
+- ✅ Forecast generation
+- ✅ Accuracy calculations
+- ✅ Pipeline integration
+- ✅ Error handling and edge cases
+
+### 🤝 Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+**Quick Start for Contributors:**
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes
+4. Run tests: `Rscript tests/run_tests.R`
+5. Commit: `git commit -m 'Add amazing feature'`
+6. Push: `git push origin feature/amazing-feature`
+7. Open a Pull Request
 
 ### 📊 Métricas de Avaliação
 

@@ -2,7 +2,6 @@
 
 ![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white) ![Tidyverse](https://img.shields.io/badge/Tidyverse-1E90FF?style=for-the-badge) ![Forecast](https://img.shields.io/badge/Forecast-FF6F00?style=for-the-badge) ![Prophet](https://img.shields.io/badge/Prophet-4267B2?style=for-the-badge)
 
-[![R Tests](https://github.com/galafis/r-time-series-forecasting-finance/workflows/R%20Tests/badge.svg)](https://github.com/galafis/r-time-series-forecasting-finance/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ### 🚀 Quick Start
@@ -86,9 +85,6 @@ r-time-series-forecasting-finance/
 ├── images/
 │   ├── arima_forecast.png            # Visualização de forecast
 │   └── garch_volatility.png          # Visualização de volatilidade
-├── .github/
-│   └── workflows/
-│       └── r-tests.yml               # CI/CD pipeline
 ├── INSTALL.R                         # Instalação de pacotes
 ├── CONTRIBUTING.md                   # Guia de contribuição
 ├── LICENSE                           # Licença MIT

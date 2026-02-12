@@ -109,22 +109,7 @@ test_that("function_name does something", {
 4. **Edge Cases**: Test boundary conditions
 5. **Error Cases**: Test error handling
 
-## CI Integration
-
-Tests run automatically on:
-- Every push to main branches
-- Every pull request
-- Manual workflow trigger
-
-See `.github/workflows/r-tests.yml` for CI configuration.
-
 ## Troubleshooting
-
-### Tests Fail Locally But Pass in CI
-
-- Check R version matches CI (4.3.0)
-- Verify all dependencies installed
-- Check for OS-specific issues
 
 ### Tests Pass But Code Still Has Issues
 

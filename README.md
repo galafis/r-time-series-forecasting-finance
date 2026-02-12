@@ -1,6 +1,6 @@
 # Time Series Forecasting for Financial Data with R
 
-![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white) ![Tidyverse](https://img.shields.io/badge/Tidyverse-1E90FF?style=for-the-badge) ![Forecast](https://img.shields.io/badge/Forecast-FF6F00?style=for-the-badge) ![Prophet](https://img.shields.io/badge/Prophet-4267B2?style=for-the-badge)
+![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white) ![Forecast](https://img.shields.io/badge/Forecast-FF6F00?style=for-the-badge)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -25,15 +25,15 @@ Rscript examples/basic_usage.R
 
 ## 🇧🇷 Previsão de Séries Temporais Financeiras com R
 
-Repositório completo e profissional para **análise e previsão de séries temporais financeiras** utilizando **R**. Implementa modelos estatísticos clássicos (ARIMA, GARCH) e modernos (Prophet, LSTM) para prever preços de ações, volatilidade e retornos.
+Repositório para **análise e previsão de séries temporais financeiras** utilizando **R**. Atualmente implementa modelagem ARIMA para prever preços de ações e retornos, com planos de adicionar mais modelos futuramente.
 
 ### 🎯 Objetivo
 
-Fornecer um guia prático e completo sobre modelagem de séries temporais no domínio financeiro, cobrindo desde aquisição de dados até backtesting e avaliação de modelos em produção.
+Fornecer um guia prático sobre modelagem de séries temporais no domínio financeiro, demonstrando o uso de ARIMA para previsão e avaliação de modelos.
 
 ### 🌟 Por que R para Séries Temporais Financeiras?
 
-R é a linguagem preferida para análise quantitativa em finanças:
+R é amplamente utilizado para análise quantitativa em finanças:
 
 | Característica | R | Python | Excel |
 |----------------|---|--------|-------|
@@ -43,17 +43,15 @@ R é a linguagem preferida para análise quantitativa em finanças:
 | **Comunidade Financeira** | ✅ Muito forte | ✅ Crescente | ✅ Tradicional |
 | **Reprodutibilidade** | ✅ RMarkdown | ✅ Jupyter | ❌ Manual |
 
-### 📊 Casos de Uso Reais
+### 📊 Exemplos de Aplicação
 
-1. **Hedge Funds**: Previsão de retornos de ações para estratégias quantitativas
-2. **Bancos**: Modelagem de volatilidade para cálculo de VaR (Value at Risk)
-3. **Fintechs**: Previsão de fluxo de caixa e receita
-4. **Trading**: Sinais de compra/venda baseados em forecasts
-5. **Risk Management**: Análise de cenários e stress testing
+1. **Previsão de preços**: Projetar preços de fechamento de ações
+2. **Análise de tendência**: Identificar padrões em dados financeiros
+3. **Avaliação de modelos**: Comparar métricas de acurácia (MAE, RMSE, MAPE)
 
 ### 🏗️ Models Implemented
 
-This repository currently implements **ARIMA** (AutoRegressive Integrated Moving Average) forecasting with comprehensive testing and CI/CD.
+This repository currently implements **ARIMA** (AutoRegressive Integrated Moving Average) forecasting with a full test suite.
 
 **Currently Available:**
 1. ✅ **ARIMA** - AutoRegressive Integrated Moving Average (fully implemented and tested)
@@ -227,183 +225,9 @@ cat("\nModel Accuracy:\n")
 print(results$accuracy)
 ```
 
-### 📈 Modelo GARCH para Volatilidade
-
-```r
-# ============================================
-# GARCH MODEL FOR VOLATILITY FORECASTING
-# ============================================
-
-library(rugarch)
-library(quantmod)
-
-garch_volatility_forecast <- function(returns, periods = 30) {
-  
-  # 1. Especificar modelo GARCH(1,1)
-  spec <- ugarchspec(
-    variance.model = list(
-      model = "sGARCH",
-      garchOrder = c(1, 1)
-    ),
-    mean.model = list(
-      armaOrder = c(1, 1),
-      include.mean = TRUE
-    ),
-    distribution.model = "std"  # Student's t distribution
-  )
-  
-  # 2. Estimar modelo
-  fit <- ugarchfit(spec, returns)
-  
-  cat("GARCH Model Summary:\n")
-  print(fit)
-  
-  # 3. Fazer previsão de volatilidade
-  forecast_vol <- ugarchforecast(fit, n.ahead = periods)
-  
-  # 4. Plotar volatilidade prevista
-  plot(forecast_vol, which = 1)
-  
-  # 5. Retornar resultados
-  return(list(
-    model = fit,
-    forecast = forecast_vol,
-    sigma = sigma(fit)  # Volatilidade condicional
-  ))
-}
-
-# Exemplo de uso
-getSymbols("^GSPC", from = "2020-01-01")  # S&P 500
-returns <- dailyReturn(Cl(GSPC))
-
-# Forecast volatilidade
-vol_results <- garch_volatility_forecast(returns, periods = 30)
-```
-
-### 🔮 Facebook Prophet
-
-```r
-# ============================================
-# FACEBOOK PROPHET FOR FINANCIAL FORECASTING
-# ============================================
-
-library(prophet)
-library(dplyr)
-
-prophet_forecast <- function(data, periods = 30) {
-  
-  # 1. Preparar dados no formato do Prophet
-  df <- data.frame(
-    ds = index(data),
-    y = as.numeric(data)
-  )
-  
-  # 2. Criar e treinar modelo
-  model <- prophet(
-    df,
-    daily.seasonality = TRUE,
-    weekly.seasonality = TRUE,
-    yearly.seasonality = TRUE,
-    changepoint.prior.scale = 0.05  # Flexibilidade de tendência
-  )
-  
-  # 3. Criar dataframe de datas futuras
-  future <- make_future_dataframe(model, periods = periods)
-  
-  # 4. Fazer previsão
-  forecast <- predict(model, future)
-  
-  # 5. Plotar resultados
-  plot(model, forecast)
-  prophet_plot_components(model, forecast)
-  
-  # 6. Retornar resultados
-  return(list(
-    model = model,
-    forecast = forecast,
-    performance = prophet_performance(model, df)
-  ))
-}
-
-# Função auxiliar para avaliar performance
-prophet_performance <- function(model, df) {
-  # Cross-validation
-  cv_results <- cross_validation(
-    model,
-    initial = 365,
-    period = 30,
-    horizon = 30,
-    units = "days"
-  )
-  
-  # Calcular métricas
-  metrics <- performance_metrics(cv_results)
-  
-  return(metrics)
-}
-```
-
-### 🧪 Backtesting e Avaliação
-
-```r
-# ============================================
-# BACKTESTING FRAMEWORK
-# ============================================
-
-backtest_model <- function(data, model_func, train_size = 0.8, horizon = 30) {
-  
-  n <- length(data)
-  split_point <- floor(n * train_size)
-  
-  # Split data
-  train <- data[1:split_point]
-  test <- data[(split_point + 1):n]
-  
-  # Train model
-  model <- model_func(train)
-  
-  # Make predictions
-  predictions <- forecast(model, h = length(test))
-  
-  # Calculate metrics
-  mae <- mean(abs(test - predictions$mean))
-  rmse <- sqrt(mean((test - predictions$mean)^2))
-  mape <- mean(abs((test - predictions$mean) / test)) * 100
-  
-  # Plot actual vs predicted
-  plot(test, type = "l", col = "black", lwd = 2, 
-       main = "Backtest: Actual vs Predicted",
-       ylab = "Value", xlab = "Time")
-  lines(predictions$mean, col = "red", lwd = 2)
-  legend("topleft", legend = c("Actual", "Predicted"), 
-         col = c("black", "red"), lwd = 2)
-  
-  # Return metrics
-  return(list(
-    mae = mae,
-    rmse = rmse,
-    mape = mape,
-    predictions = predictions
-  ))
-}
-
-# Exemplo de uso
-results <- backtest_model(
-  data = ts_data,
-  model_func = function(x) auto.arima(x),
-  train_size = 0.8,
-  horizon = 30
-)
-
-cat("Backtest Results:\n")
-cat("MAE:", results$mae, "\n")
-cat("RMSE:", results$rmse, "\n")
-cat("MAPE:", results$mape, "%\n")
-```
-
 ### 🧪 Testing
 
-The project includes a comprehensive test suite using the `testthat` framework.
+The project includes a test suite using the `testthat` framework.
 
 **Run all tests:**
 ```bash
@@ -508,7 +332,6 @@ pacf(data, lag.max = 40)
 - **[QUICKSTART.md](QUICKSTART.md)** - 5-minute setup guide
 - **[DOCUMENTATION.md](DOCUMENTATION.md)** - Complete API documentation
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
-- **[CHANGELOG.md](CHANGELOG.md)** - Version history
 
 ### 🎯 Próximos Passos
 
@@ -522,7 +345,7 @@ pacf(data, lag.max = 40)
 
 ## 🇬🇧 Time Series Forecasting for Financial Data with R
 
-Complete and professional repository for **financial time series analysis and forecasting** using **R**. Implements classical statistical models (ARIMA, GARCH) and modern approaches (Prophet, LSTM) to predict stock prices, volatility, and returns.
+Repository for **financial time series analysis and forecasting** using **R**. Currently implements ARIMA modeling for predicting stock prices and returns, with plans to add more models over time.
 
 ### 🚀 Quick Start
 
@@ -546,12 +369,11 @@ plot(forecast_result)
 
 ### 🎓 Key Learnings
 
-- ✅ Implement ARIMA, SARIMA, GARCH models
-- ✅ Use Facebook Prophet for forecasting
+- ✅ Implement ARIMA forecasting models
 - ✅ Perform backtesting and model evaluation
-- ✅ Calculate financial risk metrics
-- ✅ Build production-ready forecasting pipelines
-- ✅ Apply time series cross-validation
+- ✅ Calculate forecast accuracy metrics (MAE, RMSE, MAPE)
+- ✅ Test stationarity with the Augmented Dickey-Fuller test
+- ✅ Build end-to-end forecasting pipelines in R
 
 ---
 

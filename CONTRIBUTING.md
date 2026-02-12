@@ -65,8 +65,7 @@ We welcome feature suggestions! Please:
 1. Update documentation for any changed functionality
 2. Add tests for new features
 3. Ensure all tests pass
-4. Update CHANGELOG if applicable
-5. Request review from maintainers
+4. Request review from maintainers
 
 ### PR Checklist
 

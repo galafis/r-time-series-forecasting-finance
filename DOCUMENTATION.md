@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project provides a production-ready implementation of ARIMA time series forecasting for financial data using R. The codebase is fully tested, documented, and includes CI/CD integration.
+This project provides an implementation of ARIMA time series forecasting for financial data using R. The codebase is tested and documented.
 
 ## Architecture
 
@@ -21,12 +21,6 @@ This project provides a production-ready implementation of ARIMA time series for
    - Edge case handling
    - 15+ test cases
 
-3. **CI/CD Pipeline** (`.github/workflows/r-tests.yml`)
-   - Automated testing on push/PR
-   - R environment setup
-   - Dependency installation
-   - Test execution
-
 ### Project Structure
 
 ```
@@ -40,11 +34,9 @@ r-time-series-forecasting-finance/
 ├── data/                       # Sample data
 ├── examples/                   # Usage examples
 ├── images/                     # Visualizations
-├── .github/workflows/          # CI/CD
 ├── INSTALL.R                   # Dependency installer
 ├── verify_installation.R       # Installation checker
 ├── CONTRIBUTING.md             # Contribution guide
-├── CHANGELOG.md                # Version history
 ├── LICENSE                     # MIT License
 └── README.md                   # Main documentation
 ```
@@ -191,24 +183,12 @@ The test suite covers:
 2. Make changes and test
 3. Commit with clear messages
 4. Push and create PR
-5. Wait for CI to pass
-6. Request review
-
-## CI/CD Pipeline
-
-The GitHub Actions workflow:
-1. Checks out code
-2. Sets up R environment
-3. Installs system dependencies
-4. Installs R packages
-5. Runs test suite
-6. Reports results
+5. Request review
 
 ## Security
 
 - All dependencies from CRAN (trusted source)
 - No secrets or credentials in code
-- GITHUB_TOKEN has minimal permissions
 - Input validation prevents injection attacks
 - Regular dependency updates recommended
 
